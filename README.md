@@ -9,7 +9,6 @@ A project for Hirtheeee, by the Girtheeeee
 2. 
 ```
 cd node_server
-npm init
 npm install
 ```
 
