@@ -3,6 +3,7 @@
 // =============================================================================
 var mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
+// TODO: Start a MongoDB client and connect to it here
 // mongoose.connect('DB_ADDRESS', {useMongoClient: true}); //connect to database
    
     

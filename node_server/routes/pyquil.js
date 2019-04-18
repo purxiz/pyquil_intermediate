@@ -11,3 +11,5 @@ router.route('/send')
 	    //TODO: Write data to database
 	    response.status(200).json( { message: 'POST successfully received' } );
     });
+
+module.exports = router;
