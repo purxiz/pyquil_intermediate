@@ -26,7 +26,7 @@ var port = process.env.PORT || 8080;        // set our port
                     
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api/pyquil', require('routes/pyquil'));
+app.use('/api/pyquil', require('./routes/pyquil'));
 
 // START THE SERVER
 // =============================================================================
