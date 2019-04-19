@@ -3,7 +3,7 @@ var express     = require('express');
 var router      = express.Router();
 
 //import our model for database operations
-var Program	= require('../models/program');
+var Program	= require('../models/request');
 
 
 //respond to requests sent to /send, i.e. <IP>/api/pyquil/send

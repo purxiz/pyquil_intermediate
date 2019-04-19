@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 // TODO: Start a MongoDB client and connect to it here
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});      
+mongoose.connect('mongodb://localhost/requests', {useNewUrlParser: true});      
        
 // call the packages we need
 var express    = require('express');        // call express
