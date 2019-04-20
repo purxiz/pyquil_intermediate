@@ -9,7 +9,7 @@ var Program	= require('../models/request');
 //respond to requests sent to /send, i.e. <IP>/api/pyquil/send
 router.route('/send')
     .get( (request, response) => { 
-        response.status(200).json({message: 'get TEST'})
+        response.status(200).json({message: 'Please send a POST instead!'})
     })
 
     .post( (request, response) => { //new programs to be added to DB

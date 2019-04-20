@@ -37,7 +37,7 @@ def index():
 #Email Setup
 smtpUser = '239pyquilserver@gmail.com'
 smtpPass = 'pyquil420' #dont steal the server's gmail account!
-subject = 'PyQuil Server Results'
+subject = 'CS239 PyQuil Server Results'
 fromAdd = '239pyquilserver@gmail.com'
 
 #ssmtp email results back to sender
@@ -80,7 +80,7 @@ for request in requests:
     
     #email response @ email 
     email_body = \
-            '\nQuery:\n' + str(quil_program) +\
+            'Query:\n' + str(quil_program) +\
             '\nShots:\n' + str(shots) +\
             '\nResponse:\n' + str(response) +\
             '\nWarnings:\n' + str(warns)
