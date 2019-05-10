@@ -1,3 +1,8 @@
+// Models/Schema file written for UCLA Pyquil server
+// Written by: 
+//  Nikolai Norona
+//  Auguste Hirth @ UCLA
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 

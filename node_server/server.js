@@ -1,9 +1,16 @@
 // server.js
+// job queueing server written for UCLA PyQuil server
+// Written by: 
+//  Nikolai Norona
+//  Auguste Hirth @ UCLA
+//
+// Listens for POSTs and adds the requests to a localhosted mongodb
+
 // BASE SETUP
 // =============================================================================
 var mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
-// TODO: Start a MongoDB client and connect to it here
+// Start a MongoDB client and connect to it here
 mongoose.connect('mongodb://localhost/requests', {useNewUrlParser: true});      
        
 // call the packages we need

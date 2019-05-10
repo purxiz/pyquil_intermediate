@@ -1,7 +1,12 @@
 #### PyQuil Intermediate
 
-A project for Hirtheeee, by the Girtheeeee
+PyQuil HTTPs job queueing server
+Authors: Nikolai Norona, Auguste Hirth
 
+Composed of three main components: 
+1. A job queueing server in node, daemonized by pm2
+2. A job storage database in mongodb, daemonized with system
+3. A job processor python script (with pyquil), run periodically with crontab
 
 #### Setup
 

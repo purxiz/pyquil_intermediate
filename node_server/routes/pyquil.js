@@ -1,3 +1,8 @@
+// Routes file written for job queueing server
+// Written by: 
+//  Nikolai Norona
+//  Auguste Hirth @ UCLA
+
 //routes/pyquil.js
 var express     = require('express');
 var router      = express.Router();
@@ -17,8 +22,8 @@ router.route('/send')
         //log the details of the post request (JSON object expected)
         console.log('Received POST request with quil: ' + request.body.quil + ', email: ' + request.body.email + ', and shots: ' + request.body.shots);
 
-	    //TODO: Implement logic to make sure data is written to database
-	    //TODO: Write data to database
+        //TODO: Ensure program was actually written to db
+	    //Write data to database
         var program = new Program();
         program.quil = request.body.quil;
         program.email = request.body.email;
