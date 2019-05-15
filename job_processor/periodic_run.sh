@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PIDFILE=/home/ta/pyquil_intermediate/job_processor/job_processor.pid
+PIDFILE=/home/forest/pyquil_intermediate/job_processor/job_processor.pid
 if [ -f $PIDFILE ]
 then
   PID=$(cat $PIDFILE)
@@ -28,7 +28,7 @@ else
 fi
 
 
-source /home/ta/bin/activate
-python3 /home/ta/pyquil_intermediate/job_processor/job_processor.py
+source /home/forest/pyquil_intermediate/job_processor/venv/bin/activate
+python3 /home/forest/pyquil_intermediate/job_processor/job_processor.py
 
 rm $PIDFILE

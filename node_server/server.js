@@ -24,7 +24,7 @@ var bodyParser = require('body-parser');    // allows us to process html request
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
                   
-var port = process.env.PORT || 8080;        // set our port
+var port = process.env.PORT || 80;        // set our port
                    
                     
 // REGISTER OUR ROUTES -------------------------------
