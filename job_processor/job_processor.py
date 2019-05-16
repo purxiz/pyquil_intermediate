@@ -54,8 +54,11 @@ def index():
 #Components written by Auguste Hirth @ UCLA
 
 #Email Setup#TODO move this somewhere secure
-smtpUser = '239pyquilserver@gmail.com'
-smtpPass = 'pyquil239' #dont steal the server's gmail account!
+with open('/home/forest/pyquil_intermediate/job_processor/credentials', 'r') as file: 
+    smtpUser = file.readline().strip()
+    smtpPass = file.readline().strip()
+#smtpUser2 = '239pyquilserver@gmail.com'
+#smtpPass2 = 'pyquil239' #dont steal the server's gmail account!
 subject = 'CS239 PyQuil Server Results'
 fromAdd = '239pyquilserver@gmail.com'
 
