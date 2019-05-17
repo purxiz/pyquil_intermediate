@@ -6,6 +6,7 @@
 #   Auguste Hirth @ UCLA
 #   Nikolai Norona
 
+from pyquil import get_qc, Program
 import warnings
 import smtplib
 from email.message import EmailMessage
@@ -33,7 +34,7 @@ def email_setup():
     return mail
 
 #ssmtp email results back to sender
-def email_back(mail, email, body):
+def email_back(mail, email, subject, body):
          msg = EmailMessage()
          msg['Subject'] = subject
          msg['From'] = fromAdd
@@ -52,7 +53,8 @@ def timerator(func):
              return result, end-start
      return wrapped
 
-def run_job(request):
+
+def run_job(request, QC):
     #unwrap elements of request
     identifier = request['_id']
     quil_program = request['quil']
@@ -64,6 +66,10 @@ def run_job(request):
         try:
             QCresponse, QCruntime = timed_process_job(QC, quil_program, shots)
             success = True
+        except AttributeError as inst:
+            QCresponse = 'QPU not properly configured'
+            QCruntime = 'Did not run'
+            success = False
         except Exception as inst: 
             QCresponse = str(inst) #catch errors to send back to student
             QCruntime = 'Did not run'
@@ -81,5 +87,14 @@ def run_job(request):
         '\nQC Runtime:\n' + str(QCruntime) +\
         '\nWarnings:\n' + str(warns)
 
-    return identifier, email_body, warns, success
+    return identifier, email, email_body, warns, success
 
+
+timed_process_job = timerator(process_job) #wrap process_job in timer
+
+#Email Setup
+with open('/home/forest/pyquil_intermediate/job_processor/credentials', 'r') as file:
+    smtpUser = file.readline().strip()
+    smtpPass = file.readline().strip()
+fromAdd = '239pyquilserver@gmail.com'
+LATTICE = "Aspen-4-3Q-A"
