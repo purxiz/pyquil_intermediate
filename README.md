@@ -1,7 +1,7 @@
 #### PyQuil Intermediate
 
 PyQuil HTTPs job queueing server
-Authors: Nikolai Norona, Auguste Hirth
+Authors: Nikolai Norona, Auguste Hirth, Robert Smith
 
 Composed of three main components: 
 1. A job queueing server in node, daemonized by pm2

@@ -1,10 +1,10 @@
 
 # job_utils.py
-# Pulls Quil requests from a localhosted server, runs them on a QuantumComputer, and emails the results back to the identified email address
+# Holds utility functions and attributes that are shared by job_processor and job_verifier
 # Written by: 
 #   Robert Smith @ Rigetti
-#   Auguste Hirth @ UCLA
 #   Nikolai Norona
+#   Auguste Hirth @ UCLA
 
 from pyquil import get_qc, Program
 import warnings

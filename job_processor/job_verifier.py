@@ -1,10 +1,10 @@
 
-# job_processor.py
-# Pulls Quil requests from a localhosted server, runs them on a QuantumComputer, and emails the results back to the identified email address
+# job_verifier.py
+# Pulls Quil requests from a localhosted server, runs them on a QVM, verifies that they correctly run, updates the server to flag the job as verified, and sends a confirmation email to the associated email address
 # Written by: 
 #   Robert Smith @ Rigetti
-#   Auguste Hirth @ UCLA
 #   Nikolai Norona
+#   Auguste Hirth @ UCLA
 
 
 from pyquil import get_qc, Program
@@ -16,10 +16,6 @@ import time
 from functools import wraps
 import job_utils
 
-#TODO switch to real QPU lattice
-#LATTICE = '<lattice name booked with QCS>'
-#LATTICE = '9q-generic-qvm'
-#LATTICE = "Aspen-4-6Q-A"
 QC = get_qc(job_utils.LATTICE+"-qvm")
 
 

@@ -1,10 +1,10 @@
 
 # job_processor.py
-# Pulls Quil requests from a localhosted server, runs them on a QuantumComputer, and emails the results back to the identified email address
+# Pulls Quil verified requests from a localhosted server, runs them on the real QPU. Emails the results back to the associated email address, and sends a small summary to ahirth
 # Written by: 
 #   Robert Smith @ Rigetti
-#   Auguste Hirth @ UCLA
 #   Nikolai Norona
+#   Auguste Hirth @ UCLA
 
 
 from pyquil import get_qc, Program
@@ -16,10 +16,6 @@ import time
 from functools import wraps
 import job_utils
 
-#TODO switch to real QPU lattice
-#LATTICE = '<lattice name booked with QCS>'
-#LATTICE = '9q-generic-qvm'
-#LATTICE = "Aspen-4-6Q-A"
 try:
     QC = get_qc(job_utils.LATTICE)
 except:
