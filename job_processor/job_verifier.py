@@ -19,10 +19,7 @@ from functools import wraps
 #LATTICE = '<lattice name booked with QCS>'
 #LATTICE = '9q-generic-qvm'
 LATTICE = "Aspen-4-10Q-A"
-try:
-    QC = get_qc(LATTICE)
-except:
-    print("QPU Lattice not available")
+QC = get_qc(LATTICE+"-qvm")
 
 def process_job(qam, quil_program, shots):
     p = Program().inst(quil_program)
@@ -65,24 +62,7 @@ def timerator(func):
              return result, end-start
      return wrapped
 
-timed_process_job = timerator(process_job) #wrap process_job in timer
-
-#Email Setup
-with open('/home/forest/pyquil_intermediate/job_processor/credentials', 'r') as file: 
-    smtpUser = file.readline().strip()
-    smtpPass = file.readline().strip()
-subject = 'CS239 PyQuil Server Results: QPU'
-fromAdd = '239pyquilserver@gmail.com'
-
-
-#connect to database and pull all not verified requests
-client = MongoClient('localhost', 27017)
-requests = [request for request in client.requests.requests.find({'$and':[{'verified':True}, {'sent':False}]})]
-
-starttime = time.perf_counter()
-responses = []
-#Unwrap and send requests. Modeled after Robert Smith's outline. 
-for request in requests: 
+def run_job(request):
     #unwrap elements of request
     identifier = request['_id']
     quil_program = request['quil']
@@ -111,24 +91,43 @@ for request in requests:
         '\nQC Runtime:\n' + str(QCruntime) +\
         '\nWarnings:\n' + str(warns)
 
-    if success:
-        #update database, indicating that the request has been verified
-        #client.requests.requests.update({'_id':identifier},{'$set':{'sent':True}})
+    return identifier, email_body, warns, success
 
-        email_body += '\n\n Your job has been successfully run\n'
+
+timed_process_job = timerator(process_job) #wrap process_job in timer
+
+#Email Setup
+with open('/home/forest/pyquil_intermediate/job_processor/credentials', 'r') as file: 
+    smtpUser = file.readline().strip()
+    smtpPass = file.readline().strip()
+subject = 'CS239 PyQuil Server Results: QVM'
+fromAdd = '239pyquilserver@gmail.com'
+
+
+#connect to database and pull all not verified requests
+client = MongoClient('localhost', 27017)
+requests = [request for request in client.requests.requests.find({'verified':{'$ne':True}})]
+
+responses = []
+#Unwrap and send requests. Modeled after Robert Smith's outline. 
+for request in requests: 
+
+    identifier, email_body, warns, success = run_job(request)
+
+    if success and not warns:
+        #update database, indicating that the request has been verified
+        client.requests.requests.update({'_id':identifier},{'$set':{'verified':True}}) 
+        
+        email_body += '\n\n Your job has been verified to run duing the next reservation period\n'
 
     else:
         #Update the database, removing that request
-        #client.requests.requests.remove({'_id':identifier})
+        client.requests.requests.remove({'_id':identifier})
 
-        email_body += '\n\n Your job could not be run for some reason!\n'
+        email_body += '\n\n Your job could not be verified (It either failed to run on the simulator, or had warnings)\n'  
 
     print(email_body)
     #responses.append((email, email_body))   
-
-endtime = time.perf_counter()
-
-print(endtime-starttime, len(responses))
 
 mail = email_setup()
 for email, email_body in responses:  
