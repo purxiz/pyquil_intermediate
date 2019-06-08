@@ -67,11 +67,11 @@ def run_job(request, QC):
             QCresponse, QCruntime = timed_process_job(QC, quil_program, shots)
             success = True
         except AttributeError as inst:
-            QCresponse = 'QPU not properly configured'
+            QCresponse = str(type(inst))+': '+'QPU not properly configured'
             QCruntime = 'Did not run'
             success = False
         except Exception as inst: 
-            QCresponse = str(inst) #catch errors to send back to student
+            QCresponse = str(type(inst))+': '+str(inst)#catch errors to send back to student
             QCruntime = 'Did not run'
             success = False
         
@@ -97,4 +97,4 @@ with open('/home/forest/pyquil_intermediate/job_processor/credentials', 'r') as 
     smtpUser = file.readline().strip()
     smtpPass = file.readline().strip()
 fromAdd = '239pyquilserver@gmail.com'
-LATTICE = "Aspen-4-3Q-A"
+LATTICE = "Aspen-4-12Q-A"

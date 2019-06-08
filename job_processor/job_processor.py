@@ -41,7 +41,7 @@ for request in requests:
 
     else:
         #Update the database, removing that request
-        client.requests.requests.remove({'_id':identifier})
+        #client.requests.requests.remove({'_id':identifier})
 
         email_body += '\n\n QPU RUN \n Your job could not be run for some reason!\n'
 
