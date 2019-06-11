@@ -38,3 +38,4 @@ pip install pymongo
 ```
 Set python script to run periodically, either with the exec_on_engage.sh script, or crontab.
 
+5. Make sure the PyQuil qvm and quilc servers are running and set to automatically restart. This is currently done with docker.

@@ -26,7 +26,8 @@ def process_job(qam, quil_program, shots):
 #Components written by Auguste Hirth @ UCLA
 
 def email_setup():
-    mail = smtplib.SMTP('smtp.gmail.com',587)
+    mail = smtplib.SMTP()
+    mail.connect('smtp.gmail.com',587)
     mail.ehlo()
     mail.starttls()
     mail.ehlo()
@@ -67,7 +68,7 @@ def run_job(request, QC):
             QCresponse, QCruntime = timed_process_job(QC, quil_program, shots)
             success = True
         except AttributeError as inst:
-            QCresponse = str(type(inst))+': '+'QPU not properly configured'
+            QCresponse = str(type(inst))+': '+'QPU not properly configured\n'+str(inst)
             QCruntime = 'Did not run'
             success = False
         except Exception as inst: 

@@ -21,8 +21,8 @@ var bodyParser = require('body-parser');    // allows us to process html request
                  
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
                   
 var port = process.env.PORT || 80;        // set our port
                    
