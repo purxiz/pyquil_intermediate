@@ -12,9 +12,19 @@ import smtplib
 from email.message import EmailMessage
 import time
 from functools import wraps
+import signal
+
+def handler(signum, frame):
+    raise Exception("Job took too long to .inst()")
+
 
 def process_job(qam, quil_program, shots):
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(180)
+
     p = Program().inst(quil_program)
+
+    signal.alarm(0)
     return qam.run_and_measure(p, trials=shots)
     #NOTE modified. Original commented out below
     # This may be switched back later. 
@@ -36,14 +46,24 @@ def email_setup():
 
 #ssmtp email results back to sender
 def email_back(mail, email, subject, body):
-         msg = EmailMessage()
-         msg['Subject'] = subject
-         msg['From'] = fromAdd
-         msg.set_content(body)
-         try:
-            mail.send_message(msg, from_addr=fromAdd, to_addrs=email)
-         except Exception as error: 
-            print('failed to email to: '+ email + '\nWith error: ' + str(error))
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = fromAdd
+    msg.set_content(body)
+    try:
+        mail.send_message(msg, from_addr=fromAdd, to_addrs=email)
+    except Exception as error: 
+        print('failed to email to: '+ email + '\nWith error: ' + str(error))
+
+def safe_email_back(mail, email, subject, body):
+    try:
+        email_back(mail, email, subject, body)
+        success = True
+    except Exception as inst: 
+        mail = email_setup()
+        success = False
+    return mail, success
+
 
 def timerator(func):
      @wraps(func)

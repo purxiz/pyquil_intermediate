@@ -54,11 +54,11 @@ print(endtime-starttime, len(responses))
 
 subject = 'CS239 PyQuil Server Results: QPU'
 mail = job_utils.email_setup()
-for email, email_body in responses:  
-    try:
-        job_utils.email_back(mail, email, subject, email_body)
-    except Exception as inst: 
-        mail = job_utils.email_setup()
+for email, email_body in responses:
+    for i in range(3):
+        mail, success = job_utils.safe_email_back(mail, email, subject, email_body)
+        if success: 
+            break
 
 #Inform me about how many batch stats
 subject = 'PyQuil Server Batch Run Info'

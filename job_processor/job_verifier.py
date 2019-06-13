@@ -46,10 +46,10 @@ for request in requests:
 
 subject = 'CS239 PyQuil Server Results: QVM'
 mail = job_utils.email_setup()
-for email, email_body in responses:  
-    try:
-        job_utils.email_back(mail, email, subject, email_body)
-    except Exception as inst: 
-        mail = job_utils.email_setup()
+for email, email_body in responses:
+    for i in range(3):
+        mail, success = job_utils.safe_email_back(mail, email, subject, email_body)
+        if success: 
+            break
 
 mail.quit()
